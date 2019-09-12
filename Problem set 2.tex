@@ -79,6 +79,25 @@ Binghamton University}
 
 \begin{enumerate}
 	\item 
+	
+	Since the Resource constraint (Social Planner Problem) is $c_t=A_tk_{t}^\alpha+(1-\delta)k_{t}-k_{t+1}$ we can write the budget constraint  in recursive form as  $c=Ak^\alpha+(1-\delta)k-k'$ 
+	
+	\tab \textbf{ $\bullet$ State variable}: $k,A$ 
+	
+	\tab \textbf{ $\bullet$ Control variable}: $k'$
+	
+	
+	
+	Therefore, the Bellman equation:
+	
+	\begin{align*}
+	&V(k,A)=\Max_{k'} \left\lbrace \frac{\left( Ak^\alpha+(1-\delta)k-k'\right) ^{1-\sigma}}{1-\sigma}+ \beta \sum_{A' \in A} \Pi(A'|A)V(k',A')\right\rbrace 
+	& \notag \\
+	&\text{subject to} \notag \\
+	& \tab c \in [0,f(k)] \numberthis\\
+	& \tab k' \in [0,f(k)] \ \numberthis\\
+	\end{align*} 
+	
 	\item 
 	\item 
 	\item 

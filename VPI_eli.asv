@@ -37,18 +37,22 @@ dis = 1; tol = 1e-06; % tolerance for stopping
 v_guess = zeros(num_k, 2);
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
-     [vfnL,pol_indxL]=max(ret_l + beta*repmat(v_guess*A(2,:)',1,num_k));
- [vfnH,pol_indxH]=max(ret_h + beta*repmat(v_guess*A(1,:)',1,num_k));
-
+     % [vfnL,pol_indxL]=max(ret_l + beta*repmat(v_guess*A(2,:)',1,num_k));
+ % [vfnH,pol_indxH]=max(ret_h + beta*repmat(v_guess*A(1,:)',1,num_k));
+  value_matH = ret_h + beta*repmat(v_guess*A(1,:)',1,num_k); 
+ value_matL = ret_l + beta*repmat(v_guess*A(2,:)',1,num_k) ;
+  
     %  value_matH = ret_h + beta * repmat(v_guess*A(1,:)', [1 num_k]);
     %   value_matL = ret_l + beta * repmat(v_guess*A(2,:)', [1 num_k]);
   % value_matH = ret_h + beta * repmat(A(1,:)*v_guess, [num_k 1]);
   % value_matL = ret_l + beta * repmat(A(2,:)*v_guess, [num_k 1]);
     % find the optimal k' for every k:
+    [vfnH, pol_indxH] = max(value_matH, [], 1);
+    [vfnL, pol_indxL] = max(value_matL, [], 2);
    % vfn = [vfnH'; vfnL'];
     vfn = [vfnH vfnL];
    
-    vfn=[vfnH' vfnL'];
+    %vfn=[vfnH' vfnL'];
     % what is the distance between current guess and value function
     % based on the whole matrix
     dis = max(abs(vfn - v_guess));

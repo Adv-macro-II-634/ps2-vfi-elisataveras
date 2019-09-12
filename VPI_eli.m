@@ -4,7 +4,7 @@ alpha = 0.35;
 beta = 0.99;
 delta = 0.025;
 sigma = 2;
-
+A= [0.977 
 %%%% Set up discretized state space
 k_min = 0;
 k_max = 45;

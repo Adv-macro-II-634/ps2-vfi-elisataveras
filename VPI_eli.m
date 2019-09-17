@@ -34,7 +34,6 @@ ret_l(cons_l < 0) = -Inf;
 %%%% Iteration
 dis = 1; tol =1e-07; % tolerance for stopping 
 v_guess = zeros(2, num_k);
-%v_guess = zeros(num_k, 2);
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
      [vfnH,pol_indxH]=max(ret_h + beta*repmat(A(1,:)*v_guess,[num_k,1]),[],2);
@@ -81,6 +80,25 @@ ylabel('V(k)')
 title('VFI  results g(k)/k')
 legend({'A Hight','A Low'},'Location','southeast')
 
+%saving is f(k)-c
+
+fH=A_h*k.^ alpha ;
+fL=A_l*k.^ alpha ;
+
+ch = A_h*k .^ alpha + (1 - delta) * k - gH; 
+cl = A_l*k .^ alpha + (1 - delta) * k - gL; 
+
+sH=(fH-ch)./k;
+sL=(fL-cl)./k;
+
+
+plot(k,sH,'--',k,sL,':','Linewidth',1) 
+xlabel('k') 
+ylabel('Saving')
+title('VFI Saving per each Productivity Level')
+legend({'A Hight','A Low'},'Location','southwest')
+
+
 % PART 4
 % First, I need to generate some random number for y, that has standard
 % deviation of 0.018
@@ -90,27 +108,72 @@ legend({'A Hight','A Low'},'Location','southeast')
 
 % PART 5
 
+%using two loops over each 
+
+
+
+clear 
+close all
+%%%% Set up parameters
+alpha = 0.35;
+beta = 0.99;
+delta = 0.025;
+sigma = 2;
+A= [0.977 0.023; 0.074 0.926];
+amat = [1.1 .678]'; % usng the matrix of amat
+
+%%%% Set up discretized state space
+k_min = 0;
+k_max = 45;
+num_k = 1000; % number of points in the grid for k
 
 k = linspace(k_min, k_max, num_k);
 
 k_mat = repmat(k', [1 num_k]); % this will be useful in a bit
 
-cons_h = A_h*k_mat .^ alpha + (1 - delta) * k_mat - k_mat'; 
-cons_l = A_l*k_mat .^ alpha + (1 - delta) * k_mat - k_mat'; 
+
+polfun = zeros(num_k+1,3);
+ v0 = zeros(num_k,1);
+ dif = 10;
+ its = 0;
+maxits = 10;
+ %%%% Iteration
+dis = 1; tol =1e-07; % tolerance for stopping 
+ while dis > tol & its < maxits
+     for j = 1:3
+     for i = 1:N
+     k0 = kmat(i,1);
+     a0 = amat(j,1);
+     
+     %%%% Set up consumption and return function
+% 1st dim(rows): k today, 2nd dim (cols): k' chosen for tomorrow
+
+c = a0*k_mat .^ alpha + (1 - delta) * k_mat - k_mat'; 
+ret = cons_h .^ (1 - sigma) / (1 - sigma); % return function high
+ret_h(cons_h < 0) = -Inf;
+ret_l(cons_l < 0) = -Inf;
 
 
-dis = 1; tol = 1e-06; % tolerance for stopping 
-v_guess = zeros(1, num_k);
-while dis > tol
-    for j = 1:2 %space of possible states
-    for i = 1:num_k % space of k values 
-      K0 = k_mat(i,1);
-      A0 = amat(j,1);
+
+     c = a0*k0.^alpha - k + (1-delta)*k0; % consumption
+     
+     k1 = fminbnd(valfunstoch,k_min,k_max);
+     v1(i,j) = -vfstoch(k1);
+     k11(i,j) = k1;
      end
-    end
-end
+     end
+     %g = abs(v1?v0);
+     dis = norm(v1-v0)
+     v0 = v1;
+     its = i
+ end
 
+figure
+plot(kmat,v1,'?k','Linewidth',1)
+xlabel('k')
+ylabel('V(k)')
 
-
-
-
+figure
+plot(kmat,polfun,'?k','Linewidth',1)
+xlabel('k')
+ylabel('c')

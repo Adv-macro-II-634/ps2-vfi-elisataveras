@@ -11,7 +11,7 @@ k_max = 45;
 num_k = 1000; % number of points in the grid for k
 N = 1000;
 tol = 1e-05; % tolerance for convergence of the value functions
-maxits=5
+maxits=100;
 k_bar = delta ^ (- 1 / (1 - alpha));
 k_max = k_bar;
 
@@ -81,3 +81,4 @@ while dis > tol & its < maxits
      V_guessL = V_newL';
        its = i  ;
 end
+toc

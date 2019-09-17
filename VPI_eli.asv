@@ -21,8 +21,8 @@ k_mat = repmat(k', [1 num_k]); % this will be useful in a bit
 %%%% Set up consumption and return function
 % 1st dim(rows): k today, 2nd dim (cols): k' chosen for tomorrow
 
-cons_h = A_h*k_mat' .^ alpha + (1 - delta) * k_mat' - k_mat; 
-cons_l = A_l*k_mat' .^ alpha + (1 - delta) * k_mat' - k_mat; 
+cons_h = A_h*k_mat .^ alpha + (1 - delta) * k_mat - k_mat'; 
+cons_l = A_l*k_mat .^ alpha + (1 - delta) * k_mat - k_mat'; 
 
 ret_h = cons_h .^ (1 - sigma) / (1 - sigma); % return function high
 ret_l = cons_l .^ (1 - sigma) / (1 - sigma); % return function
@@ -32,27 +32,17 @@ ret_h(cons_h < 0) = -Inf;
 ret_l(cons_l < 0) = -Inf;
 
 %%%% Iteration
-dis = 1; tol = 1e-06; % tolerance for stopping 
-%v_guess = zeros( 2, num_k);
-v_guess = zeros(num_k, 2);
+dis = 1; tol =1e-07; % tolerance for stopping 
+v_guess = zeros(2, num_k);
+%v_guess = zeros(num_k, 2);
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
-     % [vfnL,pol_indxL]=max(ret_l + beta*repmat(v_guess*A(2,:)',1,num_k));
- % [vfnH,pol_indxH]=max(ret_h + beta*repmat(v_guess*A(1,:)',1,num_k));
-  value_matH = ret_h + beta*repmat(v_guess*A(1,:)',1,num_k); 
- value_matL = ret_l + beta*repmat(v_guess*A(2,:)',1,num_k) ;
-  
-    %  value_matH = ret_h + beta * repmat(v_guess*A(1,:)', [1 num_k]);
-    %   value_matL = ret_l + beta * repmat(v_guess*A(2,:)', [1 num_k]);
-  % value_matH = ret_h + beta * repmat(A(1,:)*v_guess, [num_k 1]);
-  % value_matL = ret_l + beta * repmat(A(2,:)*v_guess, [num_k 1]);
-    % find the optimal k' for every k:
-    [vfnH, pol_indxH] = max(value_matH, [], 1);
-    [vfnL, pol_indxL] = max(value_matL, [], 2);
-   % vfn = [vfnH'; vfnL'];
-    vfn = [vfnH vfnL];
-   
-    %vfn=[vfnH' vfnL'];
+     [vfnH,pol_indxH]=max(ret_h + beta*repmat(A(1,:)*v_guess,[num_k,1]),[],2);
+    [vfnL,pol_indxL]=max(ret_l + beta*repmat(A(2,:)*v_guess,[num_k,1]),[],2);
+    
+
+   % vfn = [vfnH' vfnL'];
+   vfn=[vfnH'; vfnL'];
     % what is the distance between current guess and value function
     % based on the whole matrix
     dis = max(abs(vfn - v_guess));
@@ -62,14 +52,39 @@ while dis > tol
 end
 
 g = [k(pol_indxH)' k(pol_indxL)']; % policy function
-plot(k,vfn,'Linewidth',1) 
+gH = k(pol_indxH); % policy function
+gL= k(pol_indxL);
+plot(k,vfnH','--',k,vfnL',':','Linewidth',1) 
 xlabel('k') 
 ylabel('V(k)')
 title('Neoclasich Stochastic Value Functions Interaction')
-
-
-plot(k,vfnH,k,vfnL)
+legend({'A Hight','A Low'},'Location','southeast')
 figure
-plot(k,g)
+
+
+%policy function
+plot(k,k(pol_indxH)','--',k,k(pol_indxL)',':','Linewidth',1) 
+xlabel('k') 
+ylabel('V(k)')
+title('VFI g(k) vs k')
+legend({'A Hight','A Low'},'Location','southeast')
+
+
+
+% PART 3 
+kgrowthH=gH./k;
+kgrowthL=gL./k;
+
+plot(k,kgrowthH,'--',k,kgrowthL,':','Linewidth',1) 
+xlabel('k') 
+ylabel('V(k)')
+title('VFI  results g(k)/k')
+legend({'A Hight','A Low'},'Location','southeast')
+
+% PART 4
+% First, I need to estimate A 
+
+
+
 
 

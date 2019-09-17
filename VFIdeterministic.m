@@ -28,10 +28,8 @@ dis = 1; tol = 1e-06; % tolerance for stopping
 v_guess = zeros(1, num_k);
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
-    value_mat = ret + beta * repmat(v_guess, [num_k 1]);
-    
+    [vfn, pol_indx] = max(ret + beta * repmat(v_guess, [num_k 1]),[],2);
     % find the optimal k' for every k:
-    [vfn, pol_indx] = max(value_mat, [], 2);
     vfn = vfn';
     
     % what is the distance between current guess and value function

@@ -32,7 +32,6 @@ while dis > tol & its < maxits
     policy_fnH = zeros(N,1);
     V_newL = zeros(N,1); % this will be the updated function (result of applying operator to 'V_guessH')
     policy_fnL = zeros(N,1);
- 
     
     for ik = 1:N % loop over values for k
         
@@ -45,8 +44,8 @@ while dis > tol & its < maxits
        k_prime = K(ii);
         cH=A_h*k_today^ alpha + (1 - delta) * k_today - k_prime;
         cL=A_l*k_today^ alpha + (1 - delta) * k_today - k_prime;
-       valueH_ik(ii) = (cH).^ (1 - sigma) / (1 - sigma) + (beta*0.977*V_guessH(ii))+(beta*0.023*V_guessL(ii));
-       valueL_ik(ii) = (cL).^ (1 - sigma) / (1 - sigma) + (beta*0.074*V_guessH(ii))+(beta*0.926*V_guessL(ii));
+       valueH_ik(ii) = (cH).^ (1 - sigma) / (1 - sigma) + beta*((0.977*V_guessH(ii))+(0.023*V_guessL(ii)));
+       valueL_ik(ii) = (cL).^ (1 - sigma) / (1 - sigma) + beta*((0.074*V_guessH(ii))+(0.926*V_guessL(ii)));
              
             % need to make sure that resource constraint isn't violated! If
             % that happens, we can just set the value for such a kprime to
@@ -69,6 +68,7 @@ while dis > tol & its < maxits
           V_newL(ik) = best_valueL;
         policy_fnL(ik) = K(indexL);
         
+        
     end
     
     % compute distance b/w V~n and V~n+1
@@ -82,3 +82,11 @@ while dis > tol & its < maxits
        its = i  ;
 end
 toc
+
+pol_index=[indexH indexL]
+
+plot(k,V_guessH','--',k,V_guessL',':','Linewidth',1) 
+xlabel('k') 
+ylabel('V(k)')
+title('Neoclasich Stochastic Value Functions Interaction')
+legend({'A Hight','A Low'},'Location','southeast')

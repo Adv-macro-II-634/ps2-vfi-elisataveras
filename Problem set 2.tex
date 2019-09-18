@@ -115,7 +115,7 @@ Binghamton University}
 
 This relationship is decreasing in $k$ but increasing in $A$.
 	
-	Assuming that by saving, it means what is left from production after consumption: $s=Ak^\alpha-c$, the Saving over $k$ looks as follows:
+	Assuming that by saving, it means what is left from production after consumption: $s=k^{\prime}-(1-\delta)k$, the Saving over $k$ looks as follows:
 	
 	\begin{center}
 		\includegraphics[width=1\linewidth]{saving}
@@ -124,17 +124,63 @@ This relationship is decreasing in $k$ but increasing in $A$.
 	where this relationship is decreasing in $k$ and increasing in $A$. This make sense because 
 
 	
-	\item Need to choose A, such that $std(y)=std(Ak^\alpha)=1.8\%$. We also know that $\frac{rk}{y}=0.35$, then $k=\frac{0.35y}{r} $
+	\item For this, I will use the code for the part (5), since it seems more reasonable results.  Using the results, I get a $sd(y)=0.1755$, whci does not match the results from the data. Doing the markov change process to find stationary probabilities:
+	
+		\[
+	\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}=\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}P
+	\]
+	
+	This means
+	
+	\[
+	\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}=\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}\left[\begin{array}{cc}
+	0.977 & 0.023\\
+	0.074 & 0.926
+	\end{array}\right],
+	\]
+	
+			\[
+	\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}=\begin{pmatrix} 0.977\bar{\pi}_{h}+ 0.074\bar{\pi}_{l} & 	0.023\bar{\pi}_{h}+0.926\bar{\pi}_{l}\end{pmatrix},
+	\]
+	
+		Therefore,
+	
+	\begin{align*}
+	&\bar{\pi}_{h}=  3.22 \bar{\pi}_{l}  \numberthis \\
+	&\bar{\pi}_{l}=  0.31 \bar{\pi}_{h} \numberthis \\	
+	\end{align*}
+	
+		Since $\bar{\pi}_{h}+\bar{\pi}_{l}=1$
+	
+	\begin{align*}
+	&4.22\bar{\pi}_{l}= 1 \numberthis \\
+	&\bar{\pi}_{l}= 0.24  \numberthis \\
+	&\bar{\pi}_{h}=  0.76   \numberthis \\	
+	\end{align*}
+	
+	 Therefore, I will try first, $A_h=1.05$, which implies sung the Long-run probabilities $A_l=\frac{1-\bar{\pi_h}A_h}{\bar{\pi_l}}= 0.839$. With this results, the standard deviation is $sd(y)=0.1445$, which means I need to keep trying for a smaller value of $A_h$. Using $A_h=1.00005$, $A_l= 0.99984$, then 
+	 
+	 
+	 Ideally, I should do a while loop and try for a low tolerance between my simulated standard deviation and the actual standard deviation. Because the code \textbf{VFIP5} is so slow, I decide against it and just try randomly picking a number.	 	 
+	 
 	
 	\item See Code \textbf{VFIP5}. Using two loops over all $K$ is quite slow and does spend a long time to find a solution. 
 	
 	The time on the previous program \textbf{Elapsed time is 0.326278 seconds.}
 	For the second one, limiting to the  \textbf{Elapsed time is 1049.453223 seconds.} Therefore, time is significantly higher for this one. 
 	
-	The results for the VFI is: 
+	Since, to me, this second version is correct, but I get differents results, I will add the graphs for this. The results for the VFI is: 
 	
 	\begin{center}
 		\includegraphics[width=1\linewidth]{VFP5}
+	\end{center}
+	
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{g_kP5}
+	\end{center}
+
+	\begin{center}
+		\includegraphics[width=0.7\linewidth]{savingP5}
 	\end{center}
 	
 	

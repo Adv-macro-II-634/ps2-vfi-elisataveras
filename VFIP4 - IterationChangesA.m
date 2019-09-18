@@ -4,8 +4,10 @@ alpha = 0.35;
 beta = 0.99;
 delta = 0.025;
 sigma = 2;
-A_h=1.1;
-A_l=.678;
+%A_h=1.1;
+%A_l=.678;
+A_h=1.0000001;
+A_l= 0.9999997  ;
 k_min = 0;
 k_max = 45;
 num_k = 1000; % number of points in the grid for k
@@ -81,35 +83,3 @@ while dis > tol & its < maxits
        its = i  ;
 end
 toc
-
-        pol_index=[indexH indexL]
-gH = K(indexH); % policy function
-gL= K(indexL);
-        
-
-
-
-plot(K,V_guessH','--',K,V_guessL',':','Linewidth',1) 
-xlabel('k') 
-ylabel('V(k)')
-title('Neoclasich Stochastic Value Functions Interaction')
-legend({'A Hight','A Low'},'Location','southeast')
-figure
-%policy function
-plot(K,policy_fnH','--',K,policy_fnL',':','Linewidth',1) 
-xlabel('k') 
-ylabel('V(k)')
-title('VFI g(k) vs k')
-legend({'A Hight','A Low'},'Location','southeast')
-
-
-%saving (investment)
-
-sH=gH - (1-delta)*K;
-sL=gL - (1-delta)*K;
-
-plot(K,sH,'--',K,sL,':','Linewidth',1) 
-xlabel('k') 
-ylabel('Saving')
-title('VFI Saving per each Productivity Level')
-legend({'A Hight','A Low'},'Location','southwest')

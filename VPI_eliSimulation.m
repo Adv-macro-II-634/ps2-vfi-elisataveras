@@ -54,36 +54,3 @@ while dis > tol  %& its < maxits
     % continue, otherwise exit the loop
 end
 toc 
-
-g = [k(pol_indxH)' k(pol_indxL)']; % policy function
-gH = k(pol_indxH); % policy function
-gL= k(pol_indxL);
-
-plot(k,v_guess(1,:)','--',k,v_guess(2,:)',':','Linewidth',1) 
-xlabel('k') 
-ylabel('V(k)')
-title('Neoclasich Stochastic Value Functions Interaction')
-legend({'A Hight','A Low'},'Location','southeast')
-
-
-
-figure
-%policy function
-plot(k,k(pol_indxH)','--',k,k(pol_indxL)',':','Linewidth',1) 
-xlabel('k') 
-ylabel('V(k)')
-title('VFI g(k) vs k')
-legend({'A Hight','A Low'},'Location','southeast')
-
-
-%saving (investment)
-
-sH=gH - (1-delta).*k;
-sL=gL - (1-delta).*k;
-
-plot(k,sH,'--',k,sL,':','Linewidth',1) 
-xlabel('k') 
-ylabel('Saving')
-title('VFI Saving per each Productivity Level')
-legend({'A Hight','A Low'},'Location','southwest')
-

@@ -26,6 +26,7 @@ ret(cons < 0) = -Inf;
 %%%% Iteration
 dis = 1; tol = 1e-06; % tolerance for stopping 
 v_guess = zeros(1, num_k);
+tic
 while dis > tol
     % compute the utility value for all possible combinations of k and k':
     [vfn, pol_indx] = max(ret + beta * repmat(v_guess, [num_k 1]),[],2);
@@ -39,7 +40,7 @@ while dis > tol
     % continue, otherwise exit the loop
     v_guess = vfn;
 end
-
+toc
 g = k(pol_indx); % policy function
 
 plot(k,vfn)

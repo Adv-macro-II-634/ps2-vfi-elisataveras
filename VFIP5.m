@@ -26,7 +26,7 @@ dis = 1; % measure of distance of value functions to each other
 n = 0; % count number of iteration steps
  its = 0;
 tic
-while dis > tol & its < maxits
+while dis > tol %& its < maxits
     
     V_newH = zeros(N,1); % this will be the updated function (result of applying operator to 'V_guessH')
     policy_fnH = zeros(N,1);

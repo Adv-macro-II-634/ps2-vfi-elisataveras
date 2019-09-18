@@ -124,7 +124,11 @@ This relationship is decreasing in $k$ but increasing in $A$.
 	where this relationship is decreasing in $k$ and increasing in $A$. This make sense because 
 
 	
-	\item For this, I will use the code for the part (5), since it seems more reasonable results.  Using the results, I get a $sd(y)=0.1755$, whci does not match the results from the data. Doing the markov change process to find stationary probabilities:
+	\item Using the results, I get a $sd(y)= 0.1412$, which does not match the results from the data. 
+	
+		 Ideally, I should do a while loop and try for a low tolerance between my simulated standard deviation and the actual standard deviation. Because the code \textbf{VFIP5} is so slow, I decide against it and just try randomly picking numbers for the High value different to $A_h=1.1$ and backing out the $A_l$ values.	 	
+	
+	Doing the markov change process to find stationary probabilities:
 	
 		\[
 	\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}=\begin{pmatrix}\bar{\pi}_{h} & \bar{\pi}_{l}\end{pmatrix}P
@@ -158,10 +162,17 @@ This relationship is decreasing in $k$ but increasing in $A$.
 	&\bar{\pi}_{h}=  0.76   \numberthis \\	
 	\end{align*}
 	
-	 Therefore, I will try first, $A_h=1.05$, which implies sung the Long-run probabilities $A_l=\frac{1-\bar{\pi_h}A_h}{\bar{\pi_l}}= 0.839$. With this results, the standard deviation is $sd(y)=0.1445$, which means I need to keep trying for a smaller value of $A_h$. Using $A_h=1.00005$, $A_l= 0.99984$, then 
+	 Therefore, I will try first, $A_h=1.05$, which implies sung the Long-run probabilities $A_l=\frac{1-\bar{\pi_h}A_h}{\bar{\pi_l}}= 0.839$. With this results, the standard deviation is $sd(y)=0.3077$, which means I need to keep trying for a smaller value of $A_h$.
 	 
-	 
-	 Ideally, I should do a while loop and try for a low tolerance between my simulated standard deviation and the actual standard deviation. Because the code \textbf{VFIP5} is so slow, I decide against it and just try randomly picking a number.	 	 
+	 \begin{itemize}
+	 	\item Using $A_h=1.0003$, $A_l=0.99903$, then  $sd(y)=0.1310$
+	 	\item Using $A_h=1.00001$, $A_l= 0.9999678$, then  $sd(y)=0.1310$
+	 	\item Using $A_h=1.0000001$, $A_l= 0.9999997$, then  $sd(y)=0.0.1310$
+	 	\item Using $A_h=1.000000000001$, $A_l=  0.9999999999967820$, then  $sd(y)=0.1143$
+	 \end{itemize}
+ 
+ Obviously, this compare with the information we saw in class, the numbers are different and quite high and very difficult to find the standard deviation that I want. So, I further do the changed with the previous way. However, my results are definitely very small standard deviation, actually very close to the optimal one.  
+ 
 	 
 	
 	\item See Code \textbf{VFIP5}. Using two loops over all $K$ is quite slow and does spend a long time to find a solution. 
@@ -169,18 +180,10 @@ This relationship is decreasing in $k$ but increasing in $A$.
 	The time on the previous program \textbf{Elapsed time is 0.326278 seconds.}
 	For the second one, limiting to the  \textbf{Elapsed time is 1049.453223 seconds.} Therefore, time is significantly higher for this one. 
 	
-	Since, to me, this second version is correct, but I get differents results, I will add the graphs for this. The results for the VFI is: 
+ I get differents results, however, the VFI looks similar: 
 	
 	\begin{center}
 		\includegraphics[width=1\linewidth]{VFP5}
-	\end{center}
-	
-	\begin{center}
-		\includegraphics[width=0.7\linewidth]{g_kP5}
-	\end{center}
-
-	\begin{center}
-		\includegraphics[width=0.7\linewidth]{savingP5}
 	\end{center}
 	
 	

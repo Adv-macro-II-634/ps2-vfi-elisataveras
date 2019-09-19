@@ -41,14 +41,34 @@ end
 A=zeros(T_sim,1);
 k_sim=zeros(T_sim,1);
 
+%Now, fill the data with the actual values of the simulation A_h=1.1;
+%A_l=.678;
+%if A_sim==1
+%    A=1.1;
+%else 
+%  A=.678;
+%end
+k_t=k';
 
-%filling up A with the actual value of A 
+
+%filling up A 
 A=a(A_sim);
-k_sim=k(k_sim_index);
+
+for t=1:T_sim
+   if  A_sim(t)==1 %the high state
+            k_sim(t)=k_t(k_sim_index);
+   else
+end   
+
+  
+%k_sim(:,5001) = [];
 
 %Then, I need to fill the information of y, given these results 
 
-y_sim=(A'.*k_sim).^alpha;
+ksimT=k_sim';
+At=A';
+
+y_sim=(A.*k_sim).^alpha;
 %Get the standard deviation
 sdy=std(y_sim)
 

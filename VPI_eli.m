@@ -8,7 +8,7 @@ sigma = 2;
 %maxits=100;
 A= [0.977 0.023; 0.074 0.926];
 A_h=1.1;
-A_l=(1-0.76289*A_h)/0.23711;
+A_l=.;
 
 %%%% Set up discretized state space
 k_min = 0;

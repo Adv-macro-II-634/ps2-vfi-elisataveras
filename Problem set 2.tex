@@ -105,7 +105,7 @@ Binghamton University}
 	\end{center}
 	
 	
-	As we can see, both are increasing and concave functions. 
+	As we can see, both are increasing and concave functions. The function is increasing in A. 
 	
 	\item  The Policy function over $k$ looks as follows:
 	
@@ -113,7 +113,7 @@ Binghamton University}
 		\includegraphics[width=1\linewidth]{g_k}
 	\end{center}
 
-This relationship is decreasing in $k$ but increasing in $A$.
+This relationship is increasing in $k$  and  $A$.
 	
 	Assuming that by saving, it means what is left from production after consumption: $s=k^{\prime}-(1-\delta)k$, the Saving over $k$ looks as follows:
 	
@@ -121,12 +121,12 @@ This relationship is decreasing in $k$ but increasing in $A$.
 		\includegraphics[width=1\linewidth]{saving}
 	\end{center}
 	
-	where this relationship is decreasing in $k$ and increasing in $A$. This make sense because 
+	where this relationship is increasing in A. In term of $k$, which is more obvious for $A_l$, it is increasing up t a point and then decrease over the periods. 
 
 	
 	\item Using the results, I get a $sd(y)= 0.1412$, which does not match the results from the data. 
 	
-		 Ideally, I should do a while loop and try for a low tolerance between my simulated standard deviation and the actual standard deviation. Because the code \textbf{VFIP5} is so slow, I decide against it and just try randomly picking numbers for the High value different to $A_h=1.1$ and backing out the $A_l$ values.	 	
+		 Ideally, I should do a while loop and try for a low tolerance between my simulated standard deviation and the actual standard deviation. I decide against it and just try randomly picking numbers for the High value different to $A_h=1.1$ and backing out the $A_l$ values.	 	
 	
 	Doing the markov change process to find stationary probabilities:
 	
@@ -162,31 +162,27 @@ This relationship is decreasing in $k$ but increasing in $A$.
 	&\bar{\pi}_{h}=  0.76   \numberthis \\	
 	\end{align*}
 	
-	 Therefore, I will try first, $A_h=1.05$, which implies sung the Long-run probabilities $A_l=\frac{1-\bar{\pi_h}A_h}{\bar{\pi_l}}= 0.839$. With this results, the standard deviation is $sd(y)=0.3077$, which means I need to keep trying for a smaller value of $A_h$.
+	 Therefore, I will try first, $A_h=1.001$, the standard deviation is $sd(y)=0.4888$, which means I need to keep trying for a smaller value of $A_h$: 
 	 
 	 \begin{itemize}
-	 	\item Using $A_h=1.0003$, $A_l=0.99903$, then  $sd(y)=0.1310$
-	 	\item Using $A_h=1.00001$, $A_l= 0.9999678$, then  $sd(y)=0.1310$
-	 	\item Using $A_h=1.0000001$, $A_l= 0.9999997$, then  $sd(y)=0.0.1310$
-	 	\item Using $A_h=1.000000000001$, $A_l=  0.9999999999967820$, then  $sd(y)=0.1143$
+	 		\item Using $A_h=1.01$, then  $sd(y)=0.1541$
+	 	\item Using $A_h=1.001$, then  $sd(y)=0.1469$
+	 	\item Using $A_h=1.0001$, then  $sd(y)=0.1467$
+	 	\item Using $A_h=1.0000001$, then  $sd(y)=0.1467$
 	 \end{itemize}
  
- Obviously, this compare with the information we saw in class, the numbers are different and quite high and very difficult to find the standard deviation that I want. So, I further do the changed with the previous way. However, my results are definitely very small standard deviation, actually very close to the optimal one.  
- 
-	 
+ And it stays there. Obviously, this compare with the information we saw in class, the numbers are different and quite high and very difficult to find the standard deviation that match the data.
 	
 	\item See Code \textbf{VFIP5}. Using two loops over all $K$ is quite slow and does spend a long time to find a solution. 
 	
-	The time on the previous program \textbf{Elapsed time is 0.326278 seconds.}
-	For the second one, limiting to the  \textbf{Elapsed time is 1049.453223 seconds.} Therefore, time is significantly higher for this one. 
+	The time on the previous program \textbf{Elapsed time is 15.301668 seconds.}
+	For the second one, limiting to the  \textbf{Elapsed time is 1049.453223 seconds.} Therefore, time is significantly slower for this one. 
 	
  I get differents results, however, the VFI looks similar: 
 	
 	\begin{center}
 		\includegraphics[width=1\linewidth]{VFP5}
 	\end{center}
-	
-	
 	
 \end{enumerate}
 
